@@ -10,6 +10,7 @@ function UpdateWrite() {
 
     const [inputValue1, setInputValue1] = useState("");
     const [inputValue2, setInputValue2] = useState("");
+    const [inputValue3, setInputValue3] = useState();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,6 +22,7 @@ function UpdateWrite() {
                 const targetObject = snapshot.val();
                 setInputValue1(targetObject.artistName)
                 setInputValue2(targetObject.artistDefinition)
+                setInputValue3(targetObject.artistVotes)
             } else {
                 alert("error");
             }
@@ -36,8 +38,20 @@ function UpdateWrite() {
         // console.log(inputValue2)
         set(newDocRef, {
             artistName: inputValue1,
-            artistDefinition: inputValue2
+            artistDefinition: inputValue2,
         }).then(() => {
+            alert("data saved successfully")
+        }).catch((error) => {
+            alert("error: ", error.message)
+        })
+    }
+
+    const overwriteVoteData = async () => {
+        const db = getDatabase(app);
+        const newDocRef = ref(db, "artists/names/" + firebaseId + "/artistVotes");
+        // console.log(inputValue1)
+        // console.log(inputValue2)
+        set(newDocRef, inputValue3).then(() => {
             alert("data saved successfully")
         }).catch((error) => {
             alert("error: ", error.message)
@@ -53,8 +67,12 @@ function UpdateWrite() {
             <input type="text" value={inputValue2}
                 onChange={(e) => setInputValue2(e.target.value)}
             />
+            <input type="text" value={inputValue3}
+                onChange={(e) => setInputValue3(e.target.value)}
+            />
             <br />
             <button onClick={overwriteData}>UPDATE</button>
+            <button onClick={overwriteVoteData}>UPDATE VOTE</button>
             <br />
             <br />
             <br />

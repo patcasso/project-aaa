@@ -1,0 +1,26 @@
+.artist-row {
+    display: flex;
+    align-items: flex-start;
+    width:70%;
+    margin:auto;
+    border: 1px solid white
+}
+
+.index-column {
+    flex: 0 0 50px; /* Adjust the width as needed */
+    text-align: center;
+    margin-right: 10px; /* Space between the columns */
+    background-color: red;
+}
+
+.img-column {
+    flex: 0 0 50px; /* Adjust the width as needed */
+    text-align: center;
+    margin-right: 10px; /* Space between the columns */
+    background-color: blue;
+}
+
+.details-column {
+    flex: 1;
+    background-color: green;
+}
