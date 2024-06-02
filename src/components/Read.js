@@ -22,11 +22,14 @@ function Read() {
         listAll(imageListRef).then((response) => {
             response.items.forEach((item) => {
                 getDownloadURL(item).then((url) => {
-                    imageUrlObject[item._location.path_.split("/")[1]] = url;
+                    setImageUrlObject(prev => ({
+                        ...prev, [item._location.path_.split("/")[1]]: url
+                    }))
                 })
             })
         })
     }, [])
+    
 
     console.log(imageUrlObject)
 
@@ -78,4 +81,4 @@ function Read() {
     )
 }
 
-export default Read
+export default Read;
