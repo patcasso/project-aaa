@@ -8,12 +8,12 @@ function Main() {
 
     return (
         <div>
-            <h4>AI Artist Arena </h4>
+            <h4>AI Artist Arena (v1.0)</h4>
             <img src="/img/main.webp" width="300px" />
             <br />
-            <button className='button1' onClick={() => navigate("/read")}>ARTISTS</button>
+            <button className='button1' onClick={() => navigate("/read")}>SEE ARTISTS</button>
             <br />
-            <button className='button1' onClick={() => navigate("/write")}>GO WRITE PAGE</button>
+            <button className='button1' onClick={() => navigate("/write")}>CREATE NEW ARTIST</button>
             <br />
             <button className='button1' onClick={() => navigate("/updateread")}>GO UPDATE READ</button>
         </div>

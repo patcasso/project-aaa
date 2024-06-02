@@ -14,19 +14,6 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyB7oAwSLaILOfMFt150wmq3fXtmhm4T1Ok",
-//   authDomain: "projectaaa-ac9ba.firebaseapp.com",
-//   databaseURL: "https://projectaaa-ac9ba-default-rtdb.asia-southeast1.firebasedatabase.app",
-//   projectId: "projectaaa-ac9ba",
-//   storageBucket: "projectaaa-ac9ba.appspot.com",
-//   messagingSenderId: "1000000650737",
-//   appId: "1:1000000650737:web:dddd2991854cae30dc5850"
-// };
-
-console.log(firebaseConfig);
-
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 

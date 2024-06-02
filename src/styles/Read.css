@@ -1,23 +1,33 @@
 .artist-row {
     display: flex;
     align-items: flex-start;
-    width:70%;
-    margin:auto;
-    border: 1px solid white
+    width: 70%;
+    margin: auto;
+    border: 1px solid white;
+    margin-bottom: 10px;
 }
 
 .index-column {
-    flex: 0 0 50px; /* Adjust the width as needed */
+    flex: 0 0 50px;
+    /* Adjust the width as needed */
     text-align: center;
-    margin-right: 10px; /* Space between the columns */
+    margin-right: 10px;
+    /* Space between the columns */
     background-color: red;
 }
 
 .img-column {
-    flex: 0 0 50px; /* Adjust the width as needed */
+    flex: 0 0 50px;
+    /* Adjust the width as needed */
     text-align: center;
-    margin-right: 10px; /* Space between the columns */
+    margin-right: 10px;
+    /* Space between the columns */
     background-color: blue;
+}
+
+img {
+    width: 200px;
+    margin: 10px;
 }
 
 .details-column {

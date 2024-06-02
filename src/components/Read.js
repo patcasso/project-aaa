@@ -1,18 +1,36 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+
 import app from "../firebase"
 import { getDatabase, ref, get } from "firebase/database";
-import { useNavigate } from 'react-router-dom';
+import { getStorage, listAll, ref as storageRef, getDownloadURL } from "firebase/storage";
+
+
 import '../styles/Read.css';
 
 function Read() {
+    const [artistsArray, setArtistsArray] = useState([]);
+    const [imageUrlObject, setImageUrlObject] = useState({});
 
     useEffect(() => {
         fetchData()
     }, [])
 
-    const navigate = useNavigate();
+    useEffect(() => {
+        const storage = getStorage(app);
+        const imageListRef = storageRef(storage, "images/")
+        listAll(imageListRef).then((response) => {
+            response.items.forEach((item) => {
+                getDownloadURL(item).then((url) => {
+                    imageUrlObject[item._location.path_.split("/")[1]] = url;
+                })
+            })
+        })
+    }, [])
 
-    const [artistsArray, setArtistsArray] = useState([]);
+    console.log(imageUrlObject)
+
+    const navigate = useNavigate();
 
     const fetchData = async () => {
         const db = getDatabase(app);
@@ -20,7 +38,15 @@ function Read() {
         const snapshot = await get(dbRef);
 
         if (snapshot.exists()) {
-            setArtistsArray(Object.values(snapshot.val()));
+
+            const myData = snapshot.val();
+            const temporaryArray = Object.keys(myData).map(myFireId => {
+                return {
+                    ...myData[myFireId],
+                    artistId: myFireId
+                }
+            });
+            setArtistsArray(temporaryArray);
         } else {
             alert("error");
         }
@@ -29,17 +55,17 @@ function Read() {
     return (
         <div>
             <h2>Artist Ranking</h2>
-            {/* <button onClick={fetchData}>Display Data</button> */}
-
             {artistsArray.map((item, index) => (
                 <div key={index} className="artist-row">
-                    {/* <img src="https://firebasestorage.googleapis.com/v0/b/projectaaa-ac9ba.appspot.com/o/ComfyUI_temp_ilakc_00008_.png?alt=media&token=7644733a-161c-4da7-9cca-726a07d52d81" width="100px" /> */}
                     <div className="index-column">{index + 1}</div>
-                    <div className="img-column">IMG</div>
+                    <div className="img-column">
+                        <img src={imageUrlObject[item.artistId]} />
+                    </div>
                     <div className="details-column">
-                        <div>{item.artistName}</div>
-                        <div>{item.artistDefinition}</div>
-                        <div>{item.artistVotes}</div>
+                        <div>Name : {item.artistName}</div>
+                        <div>Description : {item.artistDefinition}</div>
+                        <div>Votes : {item.artistVotes}</div>
+                        {/* <div>artistId : {item.artistId}</div> */}
                     </div>
                     <br />
                 </div>

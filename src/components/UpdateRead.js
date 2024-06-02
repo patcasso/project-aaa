@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import app from "../firebase"
 import { getDatabase, ref, get, remove } from "firebase/database";
 import { useNavigate } from 'react-router-dom';
 
 function UpdateRead() {
+  const [artistsArray, setArtistsArray] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, [])
 
   const navigate = useNavigate();
 
-  const [artistsArray, setArtistsArray] = useState([]);
 
   const fetchData = async () => {
     const db = getDatabase(app);
