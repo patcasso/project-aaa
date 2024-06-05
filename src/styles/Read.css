@@ -5,6 +5,7 @@
     margin: auto;
     border: 1px solid white;
     margin-bottom: 10px;
+    padding: 10px;
 }
 
 .index-column {
@@ -31,6 +32,11 @@ img {
 }
 
 .details-column {
+    flex: 1;
+    background-color: green;
+}
+
+.votes-column {
     flex: 1;
     background-color: green;
 }

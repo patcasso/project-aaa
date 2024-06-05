@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 import app from "../firebase"
-import { getDatabase, ref, get } from "firebase/database";
+import { getDatabase, ref, get, push, set } from "firebase/database";
 import { getStorage, listAll, ref as storageRef, getDownloadURL } from "firebase/storage";
 
 
@@ -29,7 +29,7 @@ function Read() {
             })
         })
     }, [])
-    
+
 
     console.log(imageUrlObject)
 
@@ -55,6 +55,29 @@ function Read() {
         }
     }
 
+    const addVote = async (artistId) => {
+        const db = getDatabase();
+        const artistVotesRef = ref(db, `artists/names/${artistId}/artistVotes`);
+
+        try {
+            const snapshot = await get(artistVotesRef);
+            if (snapshot.exists()) {
+                const currentVotes = snapshot.val();
+                // const updatedVotes = currentVotes + 1;
+                const updatedVotes = 0;
+                await set(artistVotesRef, updatedVotes);
+                alert("Vote completed");
+            } else {
+                // If artistVotes doesn't exist, initialize with 1 vote
+                await set(artistVotesRef, 1);
+                alert("Vote completed");
+            }
+        } catch (error) {
+            console.error("Error updating votes: ", error);
+            alert("Failed to complete vote");
+        }
+    };
+
     return (
         <div>
             <h2>Artist Ranking</h2>
@@ -67,8 +90,12 @@ function Read() {
                     <div className="details-column">
                         <div>Name : {item.artistName}</div>
                         <div>Description : {item.artistDefinition}</div>
-                        <div>Votes : {item.artistVotes}</div>
                         {/* <div>artistId : {item.artistId}</div> */}
+                    </div>
+                    <div className='votes-column'>
+                        Votes : {item.artistVotes}
+                        <br/>
+                        <button onClick={() => { addVote(item.artistId) }}>Vote</button>
                     </div>
                     <br />
                 </div>

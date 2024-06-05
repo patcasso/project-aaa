@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
 
 // 이미지 업로드 없을 시 생성형 API 달아서 만들어주는걸로
-
 function Write() {
     const [artistName, setArtistName] = useState("");
     const [artistDefinition, setArtistDefinition] = useState("");
@@ -15,6 +14,9 @@ function Write() {
     const navigate = useNavigate();
 
     const saveData = async () => {
+        if (!artistName || !artistDefinition || !artistImage) {
+            alert("Please fill in all fields");
+        }
         const db = getDatabase(app);
         const newDocRef = push(ref(db, "artists/names"));
 
